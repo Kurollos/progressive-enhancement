@@ -6,19 +6,70 @@
 		<title>Switch control / Progressive Enhancement / FDND</title>
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 		<link href="assets/styles.css" rel="stylesheet">
-		<style>
-			/* Schrijf hier gewoon je CSS voor dit component */
-
-			/* Hint: Dit component kun je volledig met HTML en CSS bouwen */
-
-			/* Hint: Hoe ver ga je qua styling? Vraag jezelf dit altijd af */
-		</style>
-	</head>
-	<body>
-		<h1>Switch control</h1>
 		
-		<!-- Hint: Safari heeft hiervoor iets bedacht, maar is dat al een standaard?
-		     Wat gebeurt er in browsers die dat nog niet ondersteunen? -->
+  <style>
+    /* Basis */
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+    }
+
+    /* DETAILS RESET */
+    .switch summary {
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .switch summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* SWITCH TRACK */
+    .slider {
+      display: flex;
+      align-items: center;
+      width: 90px;
+      height: 40px;
+      background: #ccc;
+      border-radius: 999px;
+      padding: 5px;
+      transition: 0.3s;
+    }
+
+    /* KNOP (bolletje) */
+    .knob {
+      width: 30px;
+      height: 30px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: 0.3s;
+    }
+
+    /* AAN (details open) */
+    .switch[open] .slider {
+      background: linear-gradient(to right, #5fd3a1, #4caf50);
+    }
+
+    .switch[open] .knob {
+      transform: translateX(45px);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Switch control</h1>
+
+  <details class="switch">
+    <summary>
+      <span class="slider">
+        <span class="knob">aan</span>
+      </span>
+    </summary>
+  </details>
 
 		<details open>
 			<summary>Demo video</summary>
