@@ -6,22 +6,111 @@
 		<title>Mobiel menu / Progressive Enhancement / FDND</title>
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 		<link href="assets/styles.css" rel="stylesheet">
-		<style>
-			/* Schrijf hier gewoon je CSS voor dit component */
+		<!DOCTYPE html>
+<html lang="nl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Mobiel menu</title>
 
-			/* Hint: kijk eens naar :target
-			   https://developer.mozilla.org/en-US/docs/Web/CSS/:target */
-		</style>
-		<script type="module">
-			/* Schrijf hier eventueel je client-side JavaScript */
+	<style>
+		body {
+			margin: 0;
+			font-family: sans-serif;
+		}
 
-			/* Hint: dit component kan volledig met CSS, maar met JS kun je 'm enhancen */
-		</script>
-	</head>
-	<body>
-		<main>
-			<h1>Mobiel menu</h1>
-			
+		/* Menu knop */
+		.menu-button {
+			display: inline-block;
+			padding: 1rem;
+			background: black;
+			color: white;
+			text-decoration: none;
+		}
+
+		/* Menu (sidebar) */
+		#menu {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 250px;
+			height: 100%;
+			background: white;
+			padding: 1rem;
+
+			/* verborgen */
+			transform: translateX(-100%);
+			transition: transform 0.3s ease;
+		}
+
+		/* OPEN via CSS (:target) */
+		#menu:target {
+			transform: translateX(0);
+		}
+
+		/* OPEN via JS */
+		#menu.open {
+			transform: translateX(0);
+		}
+
+		/* Overlay */
+		.overlay {
+			position: fixed;
+			inset: 0;
+			background: rgba(0,0,0,0.4);
+
+			opacity: 0;
+			pointer-events: none;
+			transition: 0.3s;
+		}
+
+		/* Overlay zichtbaar (CSS) */
+		#menu:target + .overlay {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		/* Overlay zichtbaar (JS) */
+		.overlay.open {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		/* Sluit knop */
+		.close {
+			display: block;
+			margin-bottom: 1rem;
+			text-decoration: none;
+			font-size: 1.5rem;
+		}
+	</style>
+
+	
+	</script>
+</head>
+
+<body>
+	<main>
+		<h1>Mobiel menu</h1>
+
+		<!-- Menu knop -->
+		<a href="#menu" class="menu-button">☰ Menu</a>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<a href="#" class="close">✕</a>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Over</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</nav>
+
+		<!-- Overlay -->
+		<a href="#" class="overlay"></a>
+	</main>
+</body>
+</html>
 			<!-- Hint: Wat heb je nodig, als je op een klein scherm naar het menu wilt? -->
 
 			<details open>
