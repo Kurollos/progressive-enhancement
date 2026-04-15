@@ -6,45 +6,145 @@
 		<title>Favorieten picker / Progressive Enhancement / FDND</title>
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 		<link href="assets/styles.css" rel="stylesheet">
-		<style>
-			/* Schrijf hier gewoon je CSS voor dit component */
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Favorieten picker</title>
 
-			/* Hint: Dit component kun je volledig met HTML en CSS bouwen */
+<style>
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: #eee;
+  }
 
-			/* Hint: Kijk eens naar field-sizing
-			   https://developer.mozilla.org/en-US/docs/Web/CSS/field-sizing */
-		</style>
-	</head>
+  h1 {
+    text-align: center;
+  }
 
-	<body>
-		<h1>Favorieten picker</h1>
+  .background-box {
+    width: 60vw;
+    height: 30vh;
+    background: var(--bg, #A675F5);
+    display: grid;
+    place-items: center;
+    border-radius: 20px;
+    position: relative;
+    transition: background 0.3s ease;
+  }
 
-		<form>
+  form {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    display: grid;
+    gap: 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 2;
+  }
 
-			<!-- Hint: hoe kun je aan een invoerelement een lijst meegeven? -->
+  input {
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 2px solid #050542;
+    font-size: 1rem;
+  }
 
-			<!-- Een lijstje met docenten
-			Charley Muhren
-			Cyd Stumpel
-			Dion Pieters
-			Dorien Drees
-			Joost Faber
-			Justus Sturkenboom
-			Koop Reynders
-			Krijn Hoetmer
-			Sanne 't Hooft
-			Suus ten Voorde
-			-->
+  /* kleur opties */
+  .colors {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+  }
 
-			<!-- De kleurcodes van FDND:
-			#A675F5
-			#050542
-			#66E5BF
-			#FFFC86
-			-->
+  .colors.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-		</form>
+  .color-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid white;
+    cursor: pointer;
+  }
 
+  .c1 { background: #A675F5; }
+  .c2 { background: #050542; }
+  .c3 { background: #66E5BF; }
+  .c4 { background: #FFFC86; }
+
+</style>
+</head>
+
+<body>
+
+<h1>Favorieten picker</h1>
+
+<div class="background-box" id="bgBox">
+
+  <form>
+    <label>
+      
+      <input list="docenten" id="docentInput" placeholder="">
+    </label>
+
+    <!-- datalist = werkt zonder JS -->
+    <datalist id="docenten">
+      <option value="Charley Muhren">
+      <option value="Cyd Stumpel">
+      <option value="Dion Pieters">
+      <option value="Dorien Drees">
+      <option value="Joost Faber">
+      <option value="Justus Sturkenboom">
+      <option value="Koop Reynders">
+      <option value="Krijn Hoetmer">
+      <option value="Sanne 't Hooft">
+      <option value="Suus ten Voorde">
+    </datalist>
+  </form>
+
+  <!-- kleur opties -->
+  <div class="colors" id="colorOptions">
+    <div class="color-btn c1" data-color="#A675F5"></div>
+    <div class="color-btn c2" data-color="#050542"></div>
+    <div class="color-btn c3" data-color="#66E5BF"></div>
+    <div class="color-btn c4" data-color="#FFFC86"></div>
+  </div>
+
+</div>
+
+<script>
+  const bgBox = document.getElementById("bgBox");
+  const options = document.getElementById("colorOptions");
+
+  // klik achtergrond → toon kleuren
+  bgBox.addEventListener("click", (e) => {
+    if (!e.target.closest("form")) {
+      options.classList.toggle("show");
+    }
+  });
+
+  // kleur kiezen
+  document.querySelectorAll(".color-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      bgBox.style.setProperty("--bg", btn.dataset.color);
+      e.stopPropagation();
+    });
+  });
+</script>
+
+</body>
+</html>
 		<details open>
 			<summary>Demo video</summary>
 			<video src="assets/pickers.mp4" width="749" height="417" controls muted autoplay loop>
