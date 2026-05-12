@@ -1,42 +1,151 @@
 <!doctype html>
 <html lang="nl">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
-		<title>Carrousel / Progressive Enhancement / FDND</title>
-		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-		<link href="assets/styles.css" rel="stylesheet">
-		<style>
-			/* Hint: welk layout model is handig om content naast elkaar te zetten? */
-		</style>
-		<script type="module">
-			/* Schrijf hier eventueel je client-side JavaScript */
-		</script>
-	</head>
-	<body>
-		<h1>Carrousel</h1>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Carrousel / FDND</title>
 
-		<!-- Content: 
-		
-		“Websites leren bouwen, én praktijkervaring opdoen?”
-		
-		“FDND is de enige HBO-opleiding voor Frontend Development in Nederland, in twee jaar stomen wij jou klaar voor het werkveld”
-		
-		“Je werkt bij ons aan échte projecten voor échte opdrachtgevers”
-		
-		“In het studiomodel werken studenten onder begeleiding van coaches en experts uit het vakgebied aan praktijkgerichte opdrachten”
-		
-		“Bij FDND leer je websites bouwen en andere belangrijke skills die jij in de praktijk toe kan passen”
-		
-		“Een Associate degree-opleiding is een tweejarige hbo-opleiding op niveau 5”
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
 
-		-->
+	<style>
+		body {
+			font-family: "Open Sans", sans-serif;
+		}
 
-		<details open>
-			<summary>Demo video</summary>
-			<video src="assets/carrousel.mp4" width="1298" height="469" controls muted loop>
-				<a href="assets/carrousel.mp4">assets/carrousel.mp4</a>
-			</video>
-		</details>
-	</body>
+		.carousel {
+			max-width: 900px;
+			margin: 3rem auto;
+			position: relative;
+		}
+
+		.carousel__viewport {
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			scroll-behavior: smooth;
+		}
+
+		.carousel__track {
+			display: flex;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.carousel__slide {
+			flex: 0 0 100%;
+			scroll-snap-align: start;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			padding: 4rem;
+			font-size: 1.5rem;
+			text-align: center;
+			color: white;
+			border-radius: 12px;
+		}
+
+		/*  verschillende kleuren */
+		.carousel__slide:nth-child(1) {
+			background: #2563eb; /* blauw */
+		}
+
+		.carousel__slide:nth-child(2) {
+			background: #16a34a; /* groen */
+		}
+
+		.carousel__slide:nth-child(3) {
+			background: #f97316; /* oranje */
+		}
+
+		/* buttons */
+		.carousel__button {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			z-index: 2;
+
+			border: none;
+			background: black;
+			color: white;
+
+			padding: 0.7rem 1rem;
+			border-radius: 999px;
+
+			cursor: pointer;
+			opacity: 0.8;
+		}
+
+		.carousel__button:hover {
+			opacity: 1;
+		}
+
+		.carousel__button--prev {
+			left: 10px;
+		}
+
+		.carousel__button--next {
+			right: 10px;
+		}
+	</style>
+
+	<script type="module">
+		const viewport = document.querySelector(".carousel__viewport");
+		const prev = document.querySelector(".carousel__button--prev");
+		const next = document.querySelector(".carousel__button--next");
+
+		const getWidth = () => viewport.clientWidth;
+
+		next.addEventListener("click", () => {
+			viewport.scrollBy({
+				left: getWidth(),
+				behavior: "smooth"
+			});
+		});
+
+		prev.addEventListener("click", () => {
+			viewport.scrollBy({
+				left: -getWidth(),
+				behavior: "smooth"
+			});
+		});
+	</script>
+</head>
+
+<body>
+
+	<h1>Carrousel</h1>
+
+	<section class="carousel" aria-label="Carrousel">
+
+		<button class="carousel__button carousel__button--prev" type="button">
+			Vorige
+		</button>
+
+		<div class="carousel__viewport">
+			<ul class="carousel__track">
+
+				<li class="carousel__slide">
+					Websites leren bouwen, én praktijkervaring opdoen?
+				</li>
+
+				<li class="carousel__slide">
+					FDND is de enige HBO-opleiding voor Frontend Development in Nederland, in twee jaar stomen wij jou klaar voor het werkveld
+				</li>
+
+				<li class="carousel__slide">
+					Je werkt bij ons aan échte projecten voor échte opdrachtgevers
+				</li>
+
+			</ul>
+		</div>
+
+		<button class="carousel__button carousel__button--next" type="button">
+			Volgende
+		</button>
+
+	</section>
+
+</body>
 </html>
