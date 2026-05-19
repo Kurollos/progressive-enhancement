@@ -6,37 +6,103 @@
 		<title>File upload met preview / Progressive Enhancement / FDND</title>
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 		<link href="assets/styles.css" rel="stylesheet">
-		<style>
-			/* Schrijf hier gewoon je CSS voor dit component */
+		
 
-			/* Hint: Denk niet te ingewikkeld */
-		</style>
-		<script type="module">
-			/* Schrijf hier eventueel je client-side JavaScript */
-			
-			/* Hint: Met een paar regels kom je al een heel eind */
+	<style>
+		body {
+			font-family: sans-serif;
+		}
 
-			/* Hint: Denk aan Sprint 5, micro-interacties en het driestappenplan:
-			   1) Zoek het element
-			   2) Voeg een event listener toe (https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event misschien?)
-			   3) Doe iets (https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications misschien?) */
+		form {
+			background: #2ecc71; /* groen */
+			padding: 50px;
+			border-radius: 12px;
+			display: grid;
+			gap: 1rem;
+			width: 790px;
+			height: 320px;
+			cursor: pointer;
+			position: relative;
+		}
 
-			/* Hint: Via JS kun je Custom Properties in CSS aanpassen
-			   https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/setProperty */
-		</script>
-	</head>
-	<body>
-		<h1>File upload met preview</h1>
+		/* verberg input maar houd hem functioneel */
+		input[type="file"] {
+			display: none;
+		}
 
-		<!-- Voor het uploaden van een bestand heb je altijd een formulier nodig.
-		     Dus die krijg je alvast. Maak je over de server niet druk; het gaat om de UI. -->
-		<form method="post">
+		.preview {
+			width: 100%;
+			height: 200px;
+			background: rgba(255,255,255,0.3);
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+		}
 
-			<!-- Hint: Denk niet te ingewikkeld -->
+		.preview img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
 
-			<button type="submit" class="fdnd-button">Uploaden</button>
+		button {
+			align-self: end; /* knop naar onder rechts */
+			background: #1e3a8a; /* donkerblauw */
+			color: white;
+			border: none;
+			border-radius: 6px;
+			padding: 6px 12px;
+			font-size: 12px;
+			cursor: pointer;
+		}
 
-		</form>
+		button:hover {
+			background: #162c66;
+		}
+	</style>
+</head>
+
+<body>
+
+<h1>File upload met preview</h1>
+
+<form id="uploadForm">
+	<input type="file" accept="image/*">
+
+	<!-- preview -->
+	<div class="preview">
+		<p>Selecteer de afbeelding</p>
+	</div>
+
+	<!-- upload knop -->
+	<button type="submit">Uploaden</button>
+</form>
+
+<script type="module">
+	const form = document.querySelector('#uploadForm');
+	const input = form.querySelector('input[type="file"]');
+	const preview = document.querySelector('.preview');
+
+	// klik op form opent file picker (maar niet als je op button klikt)
+	form.addEventListener('click', (e) => {
+		if (e.target.tagName === 'BUTTON') return;
+		input.click();
+	});
+
+	// preview tonen na selectie
+	input.addEventListener('change', () => {
+		const file = input.files[0];
+		if (!file) return;
+
+		if (!file.type.startsWith('image/')) return;
+
+		const url = URL.createObjectURL(file);
+
+		preview.innerHTML = `<img src="${url}" alt="preview">`;
+	});
+</script>
 
 		<details open>
 			<summary>Demo video</summary>
